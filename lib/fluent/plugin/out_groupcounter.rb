@@ -101,9 +101,10 @@ class Fluent::GroupCounterOutput < Fluent::Output
     messages = target_counts.delete('__sum')
 
     target_counts.each do |key, count|
-      output[attr_prefix + key + '_count'] = count
-      output[attr_prefix + key + '_rate'] = ((count * 100.0) / (1.00 * step)).floor / 100.0
-      output[attr_prefix + key + '_percentage'] = count * 100.0 / (1.00 * sum) if sum > 0
+      output[attr_prefix + key] = {}
+      output[attr_prefix + key]['count'] = count
+      output[attr_prefix + key]['rate'] = ((count * 100.0) / (1.00 * step)).floor / 100.0
+      output[attr_prefix + key]['percentage'] = count * 100.0 / (1.00 * sum) if sum > 0
       if @output_messages
         output[attr_prefix + 'messages'] = messages
       end
